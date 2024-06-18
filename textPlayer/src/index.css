@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Fruktur&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* background: #fffaf6; */
+  background: #000d25;
+
+}
+
+h1 {
+    font-family: "Fruktur", system-ui;
+    font-weight: 800;
+    font-style: italic;
+}
+h2 {
+    font-family: "Fruktur", system-ui;
+    font-style: italic;
+}
