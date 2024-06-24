@@ -1,14 +1,14 @@
-import React, {useRef} from "react";
-import {useDispatch} from "react-redux";
-import { handleCopy, handleClear, handleCut } from "../../store/slices/Slice";
+import React from "react";
+import { useDispatch } from "react-redux";
+import {
+	handleCopy,
+	handleCut,
+	setInput,
+	setOutput,
+} from "../../store/slices/slice";
+
 function Controls() {
-
-	const ref = useRef(null);
 	const dispatch = useDispatch();
-
-	const handleClear = () => {
-		dispatch(handleClear());
-	}
 
 	return (
 		<div className="control w-[80vw] bg-cyan-950 flex items-center justify-between py-4 px-5 rounded-t-lg border-t-2 border-x-2 border-b-0 text-white text-sm">
@@ -38,7 +38,11 @@ function Controls() {
 				</button>
 				<button
 					className="clear bg-red-900 rounded-sm px-2 py-[5px] border-2 inline-flex items-center shadow-lg shadow-black hover:scale-110 active:scale-75 transition-all duration-200"
-					type="button" onClick={handleClear}
+					type="button"
+					onClick={() => {
+						dispatch(setInput(""));
+						dispatch(setOutput(""));
+					}}
 				>
 					<span>Clear</span>
 					<svg
@@ -57,7 +61,8 @@ function Controls() {
 			<div className="right space-x-3">
 				<button
 					className="cut bg-teal-950 rounded-sm px-2 py-[5px] border-2 inline-flex items-center shadow-lg shadow-black hover:scale-110 active:scale-75 transition-all duration-200 space-x-1"
-					type="button" onClick={handleCut}
+					type="button"
+					onClick={() => dispatch(handleCut(""))}
 				>
 					<span>Cut</span>
 					<svg
@@ -68,14 +73,14 @@ function Controls() {
 					>
 						<path
 							fill="currentColor"
-							d="M19.6 21.6L12 14l-2.35 2.35q.2.375.275.8T10 18q0 1.65-1.175 2.825T6 22q-1.65 0-2.825-1.175T2 18q0-1.65 1.175-2.825T6 14q.425 0 .85.075t.8.275L10 12L7.65 9.65q-.375.2-.8.275T6 10q-1.65 0-2.825-1.175T2 6q0-1.65 1.175-2.825T6 2q1.65 0 2.825 1.175T10 6q0 .425-.075.85t-.275.8L21.6 19.6q.425.425.425 1t-.425 1q-.425.425-1 .425t-1-.425ZM15 11l-2-2l6.6-6.6q.425-.425 1-.425t1 .425q.425.425.425 1t-.425 1L15 11ZM6 8q.825 0 1.413-.588T8 6q0-.825-.588-1.413T6 4q-.825 0-1.413.588T4 6q0 .825.588 1.413T6 8Zm6 4.5q.225 0 .363-.138T12.5 12q0-.225-.138-.363T12 11.5q-.225 0-.363.138T11.5 12q0 .225.138.363T12 12.5ZM6 20q.825 0 1.413-.588T8 18q0-.825-.588-1.413T6 16q-.825 0-1.413.588T4 18q0 .825.588 1.413T6 20Z"
+							d="M19.6 21.6L12 14l-2.35 2.35q.2.375.275.8T10 18q0 1.65-1.175 2.825T6 22q-1.65 0-2.825-1.175T2 18q0-1.65 1.175-2.825T6 14q.425 0 .85.075t.8.275L10 12L7.65 9.65q-.375.2-.8.275T6 10q-1.65 0-2.825-1.175T2 6q0-1.65 1.175-2.825T6 2q1.65 0 2.825 1.175T10 6q0 .425-.075.85t-.275.8L21.6 19.6q.425.425.425 1t-.425 1q-.425.425-1 .425t-1-.425ZM15 11l-2-2l6.6-6.6q.425-.425 1-.425t1 .425q.425.425.425 1t-.425 1L15 11ZM6 8q.825 0 1.413-.588T8 6q0-.825-.588-1.413T6 4q-.825 0-1.413.588T4 6q0 .825.588 1.413T6 8Zm6 4.5q.225 0 .363-.138T12.5 12q0-.225-.138-.363T12 11.5q-.225 0-.363.138T11.5 12q0 .225.138.363T12 12.5ZM6 20q.825 0 1.413-.588T8 18q0-.825-.588-1.413T6 16q-.825 0-1.413.588T4 18q0 .825.588 1.413T6 20Zm0-14Zm0 8Zm0 2Z"
 						/>
 					</svg>
 				</button>
 				<button
 					className="copy bg-teal-950 rounded-sm px-2 py-[5px] border-2 inline-flex items-center shadow-lg shadow-black hover:scale-110 active:scale-75 transition-all duration-200 space-x-1"
 					type="button"
-					onClick={handleCopy}
+					onClick={() => dispatch(handleCopy())}
 				>
 					<span>Copy</span>
 					<svg

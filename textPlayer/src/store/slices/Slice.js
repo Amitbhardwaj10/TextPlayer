@@ -1,22 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
+const initialState = { input: "", output: "" };
 
 export const slice = createSlice({
-	name: "users",
-	initialState: "",
+	name: "text",
+	initialState,
 	reducers: {
-		handleCopy: (state, action) => {
-			state = window.navigator.clipboard.writeText(action.payload);
+		setInput: (state, action) => {
+			state.input = action.payload;
 		},
-		// handleCut: (state, action) => {
-		// 	handleCopy();
-		// 	state = "";
-		// },
-		// handleClear: (state, action) => {
-    //   state = "";
-    // },
 
+		setOutput: (state, action) => {
+			state.output = action.payload;
+		},
+
+		handleCopy: (state) => {
+			window.navigator.clipboard.writeText(state.input);
+		},
+
+		handleCut: (state) => {
+			window.navigator.clipboard.writeText(state.input);
+			state.input = "";
+			state.output = "";
+		},
 	},
 });
 
-export const { handleCut, handleClear, handleCopy } = slice.actions;
+export const {
+	handleCopy,
+	setInput,
+	setOutput,
+	handleCut,
+} = slice.actions;
+
 export default slice.reducer;

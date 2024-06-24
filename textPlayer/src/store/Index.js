@@ -1,8 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
-import textplayerReducer from "./slices/Slice";
+import { configureStore } from '@reduxjs/toolkit';
+import textReducer from './slices/slice';
 
-const store = configureStore({
-  reducer: textplayerReducer,
-})
-
-export default store;
+export const store = configureStore({
+  reducer: textReducer
+});
