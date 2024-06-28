@@ -13,14 +13,29 @@ import {
 	reverseCase,
 	reverseText,
 } from "../utils/stringManipulation";
-import { setOutput } from "../store/slices/slice";
+import {
+	setOutput,
+	setShowserviceContent,
+	setShowCharacter,
+	setShowOutputType,
+} from "../store/slices/slice";
 import stringServices from "../services.json";
 
 function ServiceCard() {
 	const inputValue = useSelector((state) => state.input);
+	const character = useSelector( state => state.character);
+	const outputType = useSelector(state => state.outputType);
 	const dispatch = useDispatch();
 
 	const handleServiceClick = (service) => {
+		window.scroll({
+			top: 100,
+			behavior: "smooth",
+	});
+
+	dispatch(setShowOutputType(false));
+	dispatch(setShowCharacter(false));
+
 		let result;
 		switch (service.title.toLowerCase().split(" ").join("")) {
 			case "lowercase":
@@ -36,16 +51,20 @@ function ServiceCard() {
 				result = capitalizeSentences(inputValue);
 				break;
 			case "extractuniqueletters":
-				result = extractUniqueLetters(inputValue);
+				dispatch(setShowOutputType(true));
+				result = extractUniqueLetters(inputValue, outputType);
 				break;
 			case "extractuniquenumbers":
-				result = extractUniqueNumbers(inputValue);
+				dispatch(setShowOutputType(true));
+				result = extractUniqueNumbers(inputValue, outputType);
 				break;
 			case "extractuniquewords":
-				result = extractUniqueWords(inputValue);
+				dispatch(setShowOutputType(true));
+				result = extractUniqueWords(inputValue, outputType);
 				break;
 			case "removespecificcharacters":
-				result = removeSpecificCharacters(inputValue, char);
+				 dispatch(setShowCharacter(true));
+				result = removeSpecificCharacters(inputValue, character);
 				break;
 			case "removewhitespace":
 				result = removeWhiteSpace(inputValue);
@@ -56,20 +75,21 @@ function ServiceCard() {
 			case "reversetext":
 				result = reverseText(inputValue);
 				break;
-			default:
-				result = inputValue;
 		}
 		dispatch(setOutput(result));
 	};
 
 	return (
 		<>
-			<section className="w-[80vw] mx-auto flex flex-wrap my-10 gap-8">
+			<section className="w-[82vw] mx-auto flex justify-center flex-wrap my-10 gap-8">
 				{stringServices.services.map((service, index) => (
 					<div
 						key={index}
-						onClick={() => handleServiceClick(service)}
-						className="w-[21rem] bg-cyan-950 py-2 px-2 rounded-sm border-2 shadow-lg shadow-black hover:shadow-blue-950 hover:scale-105 active:scale-75 transition-all duration-200 cursor-pointer"
+						onClick={() => {
+							handleServiceClick(service);
+							dispatch(setShowserviceContent(true));
+						}}
+						className="w-[21.5rem] bg-cyan-950 py-2 px-2 rounded-sm border-2 shadow-lg shadow-black hover:shadow-blue-950 hover:scale-105 active:scale-75 transition-all duration-200 cursor-pointer"
 					>
 						<div className="text-white flex items-center justify-between text-2xl mb-2">
 							<p>{service.title}</p>
@@ -89,7 +109,7 @@ function ServiceCard() {
 						<div>
 							<p className="text-white text-sm my-2">
 								{service.desc.length > 100
-									? service.desc.substring(0, 100) + "..."
+									? service.desc.substring(0, 90) + "..."
 									: service.desc}
 							</p>
 						</div>

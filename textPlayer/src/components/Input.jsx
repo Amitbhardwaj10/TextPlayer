@@ -2,7 +2,7 @@ import React from "react";
 import Controls from "./Input/Controls";
 import InputField from "./Input/InputField";
 import Info from "./Input/Info";
-import ServiceCard from "./ServiceCard";
+import Run from "./Input/Run";
 
 function Input() {
 	return (
@@ -11,6 +11,7 @@ function Input() {
 				<Controls />
 				<InputField />
 				<Info />
+				<Run/>
 			</div>
 		</>
 	);

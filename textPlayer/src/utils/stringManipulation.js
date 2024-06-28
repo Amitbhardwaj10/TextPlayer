@@ -45,22 +45,23 @@ const removeSpecificCharacters = (text, char) => {
 };
 
 const extractUniqueWords = (text, type) => {
+	const arr = Array.from(new Set(text.split(" ")));
 	return type == "array"
-		? Array.from(new Set(text.split(" ")))
-		: Array.from(new Set(text.split(" "))).join(" ");
+		? `[${arr}]` : arr.join(" ");
 };
 
 const extractUniqueLetters = (text, type) => {
+	const arr = Array.from(new Set(text.split("")));
 	return type == "array"
-		? Array.from(new Set(text.split("")))
-		: Array.from(new Set(text.split(""))).join(" ");
+		? `[${arr}]`
+		: arr.join(" ");
 };
 
 const extractUniqueNumbers = (text, type) => {
 	const arr = Array.from(new Set(text.split(" "))).filter(
 		(value) => !isNaN(value)
 	);
-	return type == "array" ? arr : arr.join(" ");
+	return type == "array" ? `[${arr}]` : arr.join(" ");
 };
 
 export {
