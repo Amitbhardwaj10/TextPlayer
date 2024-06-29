@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
 	input: "",
 	output: "",
@@ -7,7 +7,20 @@ const initialState = {
 	showCharacter: false,
 	outputType: "string",
 	showOutputType: false,
+	runBtnText: "",
 };
+
+const handlePaste = createAsyncThunk(
+	'input/handlePaste',
+	async (_, { dispatch }) => {
+			try {
+					const pasteText = await navigator.clipboard.readText();
+					dispatch(setInput(pasteText));
+			} catch (err) {
+					console.error(err);
+			}
+	}
+);
 
 export const slice = createSlice({
 	name: "text",
@@ -45,6 +58,10 @@ export const slice = createSlice({
 			window.navigator.clipboard.writeText(state.input);
 		},
 
+		setRunBtnText: (state, action) => {
+			state.runBtnText = action.payload;
+		},
+
 		handleCut: (state) => {
 			window.navigator.clipboard.writeText(state.input);
 			state.input = "";
@@ -63,6 +80,8 @@ export const {
 	setCharacter,
 	setShowCharacter,
 	setShowOutputType,
+	setRunBtnText,
 } = slice.actions;
 
+export {handlePaste};
 export default slice.reducer;

@@ -5,6 +5,7 @@ import {
 	handleCut,
 	setInput,
 	setOutput,
+	handlePaste
 } from "../../store/slices/slice";
 
 function Controls() {
@@ -22,6 +23,7 @@ function Controls() {
 				<button
 					type="button"
 					className="bg-teal-950 rounded-sm px-2 py-[5px] border-2 inline-flex items-center shadow-lg shadow-black hover:scale-110 active:scale-75 transition-all duration-200"
+					onClick={() => dispatch(handlePaste())}
 				>
 					<span>Paste</span>
 					<svg
