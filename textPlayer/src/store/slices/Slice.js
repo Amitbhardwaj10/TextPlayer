@@ -7,18 +7,24 @@ const initialState = {
 	showCharacter: false,
 	outputType: "string",
 	showOutputType: false,
-	runBtnText: "",
+	selectedService: null,
+	characterCount: 0,
+	characterCountNoSpaces: 0,
+	uniqueCharacterCount: 0,
+	wordCount: 0,
+	uniqueWordCount: 0,
+	sentenceCount: 0,
 };
 
 const handlePaste = createAsyncThunk(
-	'input/handlePaste',
+	"input/handlePaste",
 	async (_, { dispatch }) => {
-			try {
-					const pasteText = await navigator.clipboard.readText();
-					dispatch(setInput(pasteText));
-			} catch (err) {
-					console.error(err);
-			}
+		try {
+			const pasteText = await navigator.clipboard.readText();
+			dispatch(setInput(pasteText));
+		} catch (err) {
+			console.error(err);
+		}
 	}
 );
 
@@ -50,7 +56,7 @@ export const slice = createSlice({
 			state.showOutputType = action.payload;
 		},
 
-		setShowserviceContent: (state, action) => {
+		setShowServiceContent: (state, action) => {
 			state.showServiceContent = action.payload;
 		},
 
@@ -58,14 +64,32 @@ export const slice = createSlice({
 			window.navigator.clipboard.writeText(state.input);
 		},
 
-		setRunBtnText: (state, action) => {
-			state.runBtnText = action.payload;
+		setSelectedService: (state, action) => {
+			state.selectedService = action.payload;
 		},
 
 		handleCut: (state) => {
 			window.navigator.clipboard.writeText(state.input);
 			state.input = "";
 			state.output = "";
+		},
+		setCharacterCount: (state, action) => {
+			state.characterCount = action.payload;
+		},
+		setCharacterCountNoSpaces: (state, action) => {
+			state.characterCountNoSpaces = action.payload;
+		},
+		setUniqueCharacterCount: (state, action) => {
+			state.uniqueCharacterCount = action.payload;
+		},
+		setWordCount: (state, action) => {
+			state.wordCount = action.payload;
+		},
+		setUniqueWordCount: (state, action) => {
+			state.uniqueWordCount = action.payload;
+		},
+		setSentenceCount: (state, action) => {
+			state.sentenceCount = action.payload;
 		},
 	},
 });
@@ -75,13 +99,19 @@ export const {
 	setInput,
 	setOutput,
 	handleCut,
-	setShowserviceContent,
+	setShowServiceContent,
 	setOutputType,
 	setCharacter,
 	setShowCharacter,
 	setShowOutputType,
-	setRunBtnText,
+	setSelectedService,
+	setCharacterCount,
+	setCharacterCountNoSpaces,
+	setUniqueCharacterCount,
+	setWordCount,
+	setUniqueWordCount,
+	setSentenceCount,
 } = slice.actions;
 
-export {handlePaste};
+export { handlePaste };
 export default slice.reducer;

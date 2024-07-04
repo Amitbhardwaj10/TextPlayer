@@ -1,14 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setInput } from "../../store/slices/slice";
+import {
+	setInput,
+	setCharacterCount,
+	setCharacterCountNoSpaces,
+	setUniqueCharacterCount,
+	setWordCount,
+	setUniqueWordCount,
+	setSentenceCount,
+} from "../../store/slices/slice";
+import {
+	charCount,
+	charCountNoSpaces,
+	extractSentences,
+	extractWords,
+	uniqueCharacters,
+	uniqueWords,
+} from "../../utils/stringManipulation";
 
 function InputField() {
 	const inputValue = useSelector((state) => state.input);
 	const outputValue = useSelector((state) => state.output);
 	const showServiceContent = useSelector((state) => state.showServiceContent);
 	const dispatch = useDispatch();
-
 	let myStyle = showServiceContent ? { width: "40vw" } : { width: "80vw" };
+
+	useEffect(() => {
+		dispatch(setCharacterCount(charCount(inputValue)));
+		dispatch(setCharacterCountNoSpaces(charCountNoSpaces(inputValue)));
+		dispatch(setUniqueCharacterCount(uniqueCharacters(inputValue)));
+		dispatch(setWordCount(extractWords(inputValue)));
+		dispatch(setUniqueWordCount(uniqueWords(inputValue)));
+		dispatch(setSentenceCount(extractSentences(inputValue)));
+	}, [inputValue]);
 
 	return (
 		<div className="textarea w-[80vw] flex items-center">

@@ -1,3 +1,4 @@
+// Input.jsx
 import React from "react";
 import Controls from "./Input/Controls";
 import InputField from "./Input/InputField";
@@ -11,7 +12,7 @@ function Input() {
 				<Controls />
 				<InputField />
 				<Info />
-				<Run/>
+				<Run />
 			</div>
 		</>
 	);
