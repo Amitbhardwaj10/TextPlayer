@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { handleAlert } from "../../utils/handleAlert";
+import { useDispatch } from "react-redux";
 const initialState = {
 	input: "",
 	output: "",
@@ -14,6 +16,11 @@ const initialState = {
 	wordCount: 0,
 	uniqueWordCount: 0,
 	sentenceCount: 0,
+	showAlert: false,
+	alertType: "Success",
+	alertMessage: "",
+	alertIconType: "",
+	classActive: false,
 };
 
 const handlePaste = createAsyncThunk(
@@ -22,8 +29,10 @@ const handlePaste = createAsyncThunk(
 		try {
 			const pasteText = await navigator.clipboard.readText();
 			dispatch(setInput(pasteText));
+			handleAlert("success", "Pasted to Textbox", dispatch);
 		} catch (err) {
 			console.error(err);
+			handleAlert("error", "Failed to Paste", dispatch);
 		}
 	}
 );
@@ -61,7 +70,20 @@ export const slice = createSlice({
 		},
 
 		handleCopy: (state) => {
-			window.navigator.clipboard.writeText(state.input);
+			const dispatch = useDispatch();
+
+			if (state.input !== "") {
+				try {
+					window.navigator.clipboard.writeText(state.output);
+					handleAlert("success", "Copied to Clipboard");
+				} catch (error) {
+					console.error(error);
+					handleAlert("error", "Failed to Copy", dispatch);
+				}
+			} else {
+				handleAlert("warning", "Textbox is empty", dispatch);
+			}
+			setShowAlert(true);
 		},
 
 		setSelectedService: (state, action) => {
@@ -69,9 +91,16 @@ export const slice = createSlice({
 		},
 
 		handleCut: (state) => {
-			window.navigator.clipboard.writeText(state.input);
-			state.input = "";
-			state.output = "";
+			const dispatch = useDispatch();
+
+			if (state.input !== "") {
+				window.navigator.clipboard.writeText(state.output);
+				state.input = "";
+				state.output = "";
+				handleAlert("success", "Textbox Cleared and Copied", dispatch);
+			} else {
+				handleAlert("warning", "Textbox is empty", dispatch);
+			}
 		},
 		setCharacterCount: (state, action) => {
 			state.characterCount = action.payload;
@@ -91,6 +120,26 @@ export const slice = createSlice({
 		setSentenceCount: (state, action) => {
 			state.sentenceCount = action.payload;
 		},
+
+		setShowAlert: (state, action) => {
+			state.showAlert = action.payload;
+		},
+
+		setAlertType: (state, action) => {
+			state.alertType = action.payload;
+		},
+
+		setAlertMessage: (state, action) => {
+			state.alertMessage = action.payload;
+		},
+
+		setAlertIconType: (state, action) => {
+			state.alertIconType = action.payload;
+		},
+
+		setClassActive: (state, action) => {
+			state.classActive = action.payload;
+		}
 	},
 });
 
@@ -111,6 +160,11 @@ export const {
 	setWordCount,
 	setUniqueWordCount,
 	setSentenceCount,
+	setShowAlert,
+	setAlertType,
+	setAlertMessage,
+	setAlertIconType,
+	setClassActive,
 } = slice.actions;
 
 export { handlePaste };

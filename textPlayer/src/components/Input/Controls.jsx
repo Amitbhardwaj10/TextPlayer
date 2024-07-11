@@ -5,12 +5,12 @@ import {
 	handleCut,
 	setInput,
 	setOutput,
-	handlePaste
+	handlePaste,
 } from "../../store/slices/slice";
+import { handleAlert } from "../../utils/handleAlert";
 
 function Controls() {
 	const dispatch = useDispatch();
-
 	return (
 		<div className="control w-[80vw] bg-cyan-950 flex items-center justify-between py-4 px-5 rounded-t-lg border-t-2 border-x-2 border-b-0 text-white text-sm">
 			<div className="left space-x-3 flex items-center">
@@ -44,6 +44,7 @@ function Controls() {
 					onClick={() => {
 						dispatch(setInput(""));
 						dispatch(setOutput(""));
+						handleAlert("success", "Textbox Cleared", dispatch);
 					}}
 				>
 					<span>Clear</span>

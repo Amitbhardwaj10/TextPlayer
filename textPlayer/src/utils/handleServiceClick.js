@@ -11,23 +11,25 @@ import {
   removeWhiteSpace,
   reverseCase,
   reverseText,
-} from "../utils/stringManipulation";
+} from "./stringManipulation";
 import {
   setOutput,
   setShowCharacter,
   setShowOutputType,
 } from "../store/slices/slice";
+import { handleAlert } from "./handleAlert";
 
 export const handleServiceClick = (service, inputValue, character, outputType, dispatch) => {
   window.scroll({
-      top: 100,
+      top: 90,
       behavior: "smooth",
   });
 
   if (!inputValue) {
-      const outputValue = "Input field is empty!";
-      dispatch(setOutput(outputValue));
+      handleAlert("warning", "Textbox is empty", dispatch);
       return;
+  }else {
+    handleAlert("success", service.title, dispatch);
   }
 
   dispatch(setShowOutputType(false));
@@ -60,6 +62,12 @@ export const handleServiceClick = (service, inputValue, character, outputType, d
           result = extractUniqueWords(inputValue, outputType);
           break;
       case "removespecificcharacters":
+        if (character === "") {
+            handleAlert("warning", "Please select a character to remove.", dispatch)
+        }
+        else {
+            handleAlert("success", `${character} removed successfully.`, dispatch)
+        }
           dispatch(setShowCharacter(true));
           result = removeSpecificCharacters(inputValue, character);
           break;

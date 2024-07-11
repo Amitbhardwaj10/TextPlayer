@@ -5,7 +5,16 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        progress: {
+          '100%': { right: '150%' },
+        }
+      },
+      animation: {
+        progress: 'progress 2s linear forwards',
+      }
+    },
   },
   plugins: [],
 }
