@@ -70,20 +70,16 @@ export const slice = createSlice({
 		},
 
 		handleCopy: (state) => {
-			const dispatch = useDispatch();
-
 			if (state.input !== "") {
-				try {
-					window.navigator.clipboard.writeText(state.output);
-					handleAlert("success", "Copied to Clipboard");
-				} catch (error) {
-					console.error(error);
-					handleAlert("error", "Failed to Copy", dispatch);
-				}
+				navigator.clipboard.writeText(state.output);
+				state.alertType = "success";
+				state.alertMessage = "Copied to Clipboard";
+				state.showAlert = true;
 			} else {
-				handleAlert("warning", "Textbox is empty", dispatch);
+				state.alertType = "warning";
+				state.alertMessage = "Textbox is empty";
+				state.showAlert = true;
 			}
-			setShowAlert(true);
 		},
 
 		setSelectedService: (state, action) => {
@@ -91,15 +87,17 @@ export const slice = createSlice({
 		},
 
 		handleCut: (state) => {
-			const dispatch = useDispatch();
-
 			if (state.input !== "") {
-				window.navigator.clipboard.writeText(state.output);
+				navigator.clipboard.writeText(state.output);
 				state.input = "";
 				state.output = "";
-				handleAlert("success", "Textbox Cleared and Copied", dispatch);
+				state.alertType = "success";
+				state.alertMessage = "Textbox Cleared and Copied";
+				state.showAlert = true;
 			} else {
-				handleAlert("warning", "Textbox is empty", dispatch);
+				state.alertType = "warning";
+				state.alertMessage = "Textbox is empty";
+				state.showAlert = true;
 			}
 		},
 		setCharacterCount: (state, action) => {
@@ -139,7 +137,7 @@ export const slice = createSlice({
 
 		setClassActive: (state, action) => {
 			state.classActive = action.payload;
-		}
+		},
 	},
 });
 

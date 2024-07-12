@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setAlertIconType, setClassActive, setShowAlert } from "../store/slices/slice";
+import {
+	setAlertIconType,
+	setClassActive,
+	setShowAlert,
+} from "../store/slices/slice";
 import { toggleAlertClasses } from "../utils/handleAlert";
 
 function Alert() {
@@ -8,10 +12,8 @@ function Alert() {
 	const alertType = useSelector((state) => state.alertType);
 	const alertMessage = useSelector((state) => state.alertMessage);
 	const showAlert = useSelector((state) => state.showAlert);
-    const isActive = useSelector(state => state.classActive);
+	const isActive = useSelector((state) => state.classActive);
 	const dispatch = useDispatch();
-
-	console.log(showAlert);
 
 	useEffect(() => {
 		if (showAlert) {
@@ -24,7 +26,7 @@ function Alert() {
 			setTimeout(() => {
 				document.querySelector(".progress").classList.remove("active");
 			}, 100);
-            dispatch(setClassActive(false));
+			dispatch(setClassActive(false));
 		}
 	}, [
 		alertType,
@@ -42,7 +44,10 @@ function Alert() {
 		>
 			<div className="alert-content mx-5 flex justify-even gap-5 items-center w-full">
 				<i
-					className={`fa-solid fa-xl ${isActive && alertIconType} ${alertType == "warning" ? "text-yellow-600" : "text-green-600"}`}
+					className={`fa-solid fa-xl ${isActive && alertIconType} 
+					${alertType == "error" && "text-red-600"} 
+					${alertType == "success" && "text-green-500"} 
+					${alertType == "warning" && "text-yellow-600"}`}
 				></i>
 				<div className="message flex flex-col">
 					<span className="text text-1 font-semibold">{alertType}</span>
