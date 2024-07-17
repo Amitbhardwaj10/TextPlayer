@@ -3,8 +3,7 @@ import { useDispatch } from "react-redux";
 import {
 	handleCopy,
 	handleCut,
-	setInput,
-	setOutput,
+	clearText,
 	handlePaste,
 } from "../../store/slices/slice";
 import { handleAlert } from "../../utils/handleAlert";
@@ -42,8 +41,7 @@ function Controls() {
 					className="clear bg-red-900 rounded-sm px-2 py-[5px] border-2 inline-flex items-center shadow-lg shadow-black hover:scale-110 active:scale-75 transition-all duration-200"
 					type="button"
 					onClick={() => {
-						dispatch(setInput(""));
-						dispatch(setOutput(""));
+						dispatch(clearText(""));
 						handleAlert("success", "Textbox Cleared", dispatch);
 					}}
 				>

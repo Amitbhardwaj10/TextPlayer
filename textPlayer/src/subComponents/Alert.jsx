@@ -1,10 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-	setAlertIconType,
-	setClassActive,
-	setShowAlert,
-} from "../store/slices/slice";
+import { setAlert, setClassActive } from "../store/slices/slice";
 import { toggleAlertClasses } from "../utils/handleAlert";
 
 function Alert() {
@@ -19,7 +15,7 @@ function Alert() {
 		if (showAlert) {
 			toggleAlertClasses(alertType, dispatch);
 			setTimeout(() => {
-				dispatch(setShowAlert(false));
+				dispatch(setAlert({ alertType, showAlert: false }));
 			}, 2000);
 		} else {
 			document.querySelector(".alert").classList.remove("active");
@@ -28,13 +24,7 @@ function Alert() {
 			}, 100);
 			dispatch(setClassActive(false));
 		}
-	}, [
-		alertType,
-		setAlertIconType,
-		setShowAlert,
-		showAlert,
-		toggleAlertClasses,
-	]);
+	}, [alertType, setAlert, showAlert, toggleAlertClasses]);
 
 	return (
 		<div

@@ -1,8 +1,8 @@
 // Button.jsx
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleServiceClick } from "../utils/handleServiceClick";
-import { setSelectedService, setShowServiceContent } from "../store/slices/slice";
+import { handleServiceClick } from "../../utils/handleServiceClick";
+import { setSelectedService, setShowServiceContent } from "../slices/slice";
 
 function Button({ service }) {
   let inputValue = useSelector((state) => state.input);

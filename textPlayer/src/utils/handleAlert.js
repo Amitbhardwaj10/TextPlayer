@@ -1,16 +1,11 @@
 import {
-	setShowAlert,
-	setAlertType,
-	setAlertMessage,
 	setAlertIconType,
+	setAlert,
 	setClassActive,
 } from "../store/slices/slice";
 
-
 const handleAlert = (type, message, dispatch) => {
-	dispatch(setShowAlert(true));
-	dispatch(setAlertType(type));
-	dispatch(setAlertMessage(message));
+	dispatch(setAlert({ message, type, showAlert: true }));
 };
 
 const toggleAlertClasses = (type = "success", dispatch) => {
